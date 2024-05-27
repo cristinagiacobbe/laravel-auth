@@ -27,7 +27,6 @@
                             <td>
                                 @include('partials.image_snippet')
                             </td>
-
                             <td>{{ $project->description }}</td>
                             <td>{{ $project->project_url }}</td>
                             <td>
