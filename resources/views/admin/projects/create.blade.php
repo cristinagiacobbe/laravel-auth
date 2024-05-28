@@ -29,11 +29,7 @@
                         <option value="{{ $type->id }}" {{ $type->id == old('type_id') ? 'selected' : '' }}>
                             {{ $type->name }}</option>
                     @endforeach
-
-
             </div>
-
-
 
 
             <div class="mb-3">

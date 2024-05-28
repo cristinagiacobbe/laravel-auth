@@ -50,7 +50,8 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        //
+
+        return view('admin.projects.show', compact('project'));
     }
 
     /**
@@ -58,7 +59,8 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        //
+        $types = Type::all();
+        return view('admin.projects.edit', compact('project', 'types'));
     }
 
     /**
@@ -66,7 +68,16 @@ class ProjectController extends Controller
      */
     public function update(UpdateProjectRequest $request, Project $project)
     {
-        //
+        $val_data = $request->validated();
+        $val_data['slug'] = Str::of($request->title)->slug('-');
+
+
+        if ($request->has('cover_image')) {
+            $val_data['cover_image'] = Storage::put('uploads', $request->cover_image);
+        };
+
+        $project->update($val_data);
+        return to_route('admin.projects.index')->with('message', 'Post created miracolously😄');
     }
 
     /**
@@ -74,6 +85,10 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
-        //
+        if ($project->cover_image) {
+            Storage::delete($project->cover_image);
+        }
+        $project->delete();
+        return to_route('admin.projects.index')->with('message', 'Project definitively removed');
     }
 }
