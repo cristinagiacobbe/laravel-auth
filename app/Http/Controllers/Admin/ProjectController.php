@@ -40,7 +40,7 @@ class ProjectController extends Controller
         if ($request->has('cover_image')) {
             $val_data['cover_image'] = Storage::put('uploads', $request->cover_image);
         };
-
+        /*  dd($val_data); */
         Project::create($val_data);
         return to_route('admin.projects.index')->with('message', 'Post created miracolously😄');
     }
@@ -69,6 +69,7 @@ class ProjectController extends Controller
     public function update(UpdateProjectRequest $request, Project $project)
     {
         $val_data = $request->validated();
+
         $val_data['slug'] = Str::of($request->title)->slug('-');
 
 
@@ -77,6 +78,8 @@ class ProjectController extends Controller
         };
 
         $project->update($val_data);
+
+
         return to_route('admin.projects.index')->with('message', 'Post created miracolously😄');
     }
 
