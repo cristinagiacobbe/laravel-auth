@@ -6,9 +6,11 @@ use App\Models\Project;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
 use App\Http\Controllers\Controller;
+use App\Models\Technology;
 use Illuminate\Support\Str;
 use App\Models\Type;
 use Illuminate\Support\Facades\Storage;
+
 
 class ProjectController extends Controller
 {
@@ -16,8 +18,10 @@ class ProjectController extends Controller
      * Display a listing of the resource.
      */
     public function index()
+
     {
-        return view('admin.projects.index', ['projects' => Project::orderByDesc('id')->paginate()]);
+        $projects = Project::orderByDesc('id')->paginate();
+        return view('admin.projects.index', compact('projects'));
     }
 
     /**
@@ -25,7 +29,9 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        return view('admin.projects.create', ['types' => Type::all()]);
+        $types = Type::all();
+        $technologies = Technology::all();
+        return view('admin.projects.create', compact('types', 'technologies'));
     }
 
     /**
@@ -40,8 +46,12 @@ class ProjectController extends Controller
         if ($request->has('cover_image')) {
             $val_data['cover_image'] = Storage::put('uploads', $request->cover_image);
         };
-        /*  dd($val_data); */
-        Project::create($val_data);
+
+        $projects = Project::create($val_data);
+        if ($request->has('technologies')) {
+            $projects->technologies()->attach($val_data['technologies']);
+        }
+
         return to_route('admin.projects.index')->with('message', 'Post created miracolously😄');
     }
 
@@ -60,7 +70,9 @@ class ProjectController extends Controller
     public function edit(Project $project)
     {
         $types = Type::all();
-        return view('admin.projects.edit', compact('project', 'types'));
+        $technologies = Technology::all();
+
+        return view('admin.projects.edit', compact('project', 'types', 'technologies'));
     }
 
     /**
@@ -79,6 +91,11 @@ class ProjectController extends Controller
 
         $project->update($val_data);
 
+        dd($val_data['technologies']);
+
+        if ($request->has('technologies')) {
+            $project->technologies()->sync($val_data['technologies']);
+        }
 
         return to_route('admin.projects.index')->with('message', 'Post created miracolously😄');
     }

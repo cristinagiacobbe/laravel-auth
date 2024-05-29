@@ -55,8 +55,26 @@
                 <textarea class="form-control" name="description" id="description" rows="3">{{ old('description') ?: $project->description }}</textarea>
             </div>
 
-            <button class="btn btn-primary" type="submit">Update</button>
-            <button class="btn btn-danger">Turn back to project list</button>
+            <div class="mb-3 d-flex gap-3">
+                @foreach ($technologies as $technology)
+                    <div class="form-check ">
+
+                        <input class="form-check-input" type="checkbox" id="technology-{{ $technology->id }}"
+                            value="{{ $technology->id }}" name="technologies[]"
+                            {{ in_array($technology->id, old('technologies', $project->technologies->pluck('id')->toArray() ?? [])) ? 'checked' : '' }} />
+
+
+
+
+                        <label class="form-check-label" for="tag-{{ $technology->id }}">{{ $technology->name }}</label>
+                    </div>
+                @endforeach
+
+
+
+
+                <button class="btn btn-primary" type="submit">Update</button>
+                <button class="btn btn-danger">Turn back to project list</button>
 
         </form>
     </div>

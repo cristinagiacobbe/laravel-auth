@@ -15,6 +15,8 @@
                         <th scope="col">Cover_image</th>
                         <th scope="col">Description</th>
                         <th scope="col">Project_url</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Technology</th>
                         <th scope="col">Actions</th>
                     </tr>
                 </thead>
@@ -24,16 +26,32 @@
                             <td scope="row">{{ $project->id }}</td>
                             <td>{{ $project->title }}</td>
 
+                            {{-- Check for image --}}
                             <td>
                                 @include('partials.image_snippet')
                             </td>
+
                             <td>{{ $project->description }}</td>
-                            <td>{{ $project->project_url }}</td>
+                            {{--     <td><a href="{{ $project->project_url }}" target="__blank"></a></td> --}}
+                            <td><a href="{{ $project->project_url }}">{{ $project->project_url }}</a></td>
+                            <td>
+                                <span
+                                    class="badge bg-secondary">{{ $project->type ? $project->type->name : 'none type' }}</span>
+                            </td>
+
+                            <td>
+                                @forelse ($project->technologies as $technology)
+                                    <span class="badge bg-secondary">{{ $technology->name }}</span>
+                                @empty
+                                    None technology
+                                @endforelse
+                            </td>
+
                             <td>
                                 <a href="{{ route('admin.projects.show', $project) }}" class="btn btn-primary ">
                                     <i class="fa-solid fa-binoculars"></i>
                                     View</a>
-                                <a href="{{ route('admin.projects.edit', $project) }}" class="btn btn-primary ">
+                                <a href="{{ route('admin.projects.edit', $project) }}" class="btn btn-dark m-1 ">
                                     <i class="fa-solid fa-pencil"></i>
                                     Edit</a>
 
