@@ -77,10 +77,6 @@
                 @endforeach
             </div>
 
-
-
-
-
             <button class="btn btn-primary" type="submit">Create</button>
             <button class="btn btn-danger">Turn back to project list</button>
 

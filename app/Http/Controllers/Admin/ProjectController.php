@@ -91,7 +91,7 @@ class ProjectController extends Controller
 
         $project->update($val_data);
 
-        dd($val_data['technologies']);
+        /*  dd($val_data['technologies']); */
 
         if ($request->has('technologies')) {
             $project->technologies()->sync($val_data['technologies']);
@@ -105,6 +105,8 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
+        /* Nb: non serve fare sync o detach sulla technology perchè abbiamo usato cascadeOnDelete */
+
         if ($project->cover_image) {
             Storage::delete($project->cover_image);
         }
