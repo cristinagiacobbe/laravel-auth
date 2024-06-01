@@ -1,10 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Type;
 use App\Http\Requests\StoreTypeRequest;
 use App\Http\Requests\UpdateTypeRequest;
+use illuminate\Support\Str;
 
 class TypeController extends Controller
 {
@@ -13,7 +15,8 @@ class TypeController extends Controller
      */
     public function index()
     {
-        //
+
+        return view('admin.types.index', ['types' => Type::all()]);
     }
 
     /**
@@ -29,7 +32,13 @@ class TypeController extends Controller
      */
     public function store(StoreTypeRequest $request)
     {
-        //
+        $val_data = $request->validated();
+        $val_data['slug_type'] = Str::of($request->name)->slug('-');
+
+
+        $types = Type::create($val_data);
+
+        return to_route('admin.types.index')->with('message', 'Post created miracolously😄');
     }
 
     /**
@@ -61,6 +70,7 @@ class TypeController extends Controller
      */
     public function destroy(Type $type)
     {
-        //
+        $type->delete();
+        return to_route('admin.types.index')->with('message', 'Type definitively removed');
     }
 }
