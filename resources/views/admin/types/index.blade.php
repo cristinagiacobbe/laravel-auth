@@ -35,11 +35,9 @@
                                 <tr class="">
                                     <td scope="row">{{ $type->id }}</td>
                                     <td>{{ $type->name }}</td>
-                                    <td>{{ count($type->projects) }}</td>
                                     <td>
-                                        <a href="{{ route('admin.types.show', $type) }}" class="btn btn-primary ">
-                                            <i class="fa-solid fa-binoculars"></i>
-                                            View</a>
+                                        <a href="{{ route('admin.types.show', $type) }}">{{ count($type->projects) }}</a>
+                                    <td>
 
                                         <!-- Modal trigger button -->
                                         <button type="button" class="btn btn-danger" data-bs-toggle="modal"
@@ -80,10 +78,6 @@
                                                 </div>
                                             </div>
                                         </div>
-
-
-
-
                                     </td>
                                 </tr>
                             @empty
