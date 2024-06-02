@@ -20,7 +20,7 @@ class ProjectController extends Controller
     public function index()
 
     {
-        $projects = Project::orderByDesc('id')->paginate();
+        $projects = Project::orderByDesc('id')->paginate(10);
         return view('admin.projects.index', compact('projects'));
     }
 

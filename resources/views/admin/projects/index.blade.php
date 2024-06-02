@@ -6,7 +6,7 @@
         @include('partials.success')
 
         <div class="table-responsive">
-            <table class="table table-primary">
+            <table class="table table-primary px-2">
                 <a class="btn btn-info m-2" href="{{ route('admin.projects.create') }}">Add a new project</a>
                 <thead>
                     <tr>
@@ -50,15 +50,14 @@
                             <td>
                                 <a href="{{ route('admin.projects.show', $project) }}" class="btn btn-primary ">
                                     <i class="fa-solid fa-binoculars"></i>
-                                    View</a>
+                                </a>
                                 <a href="{{ route('admin.projects.edit', $project) }}" class="btn btn-dark m-1 ">
                                     <i class="fa-solid fa-pencil"></i>
-                                    Edit</a>
+                                </a>
 
                                 <!-- Modal trigger button -->
                                 <button type="button" class="btn btn-danger" data-bs-toggle="modal"
                                     data-bs-target="#modalId-{{ $project->id }}"><i class="fa-solid fa-ban"></i>
-                                    Delete
                                 </button>
 
                                 <!-- Modal Body -->
@@ -112,4 +111,6 @@
         </div>
 
     </div>
+
+    {{ $projects->links('pagination::bootstrap-5') }}
 @endsection
