@@ -4,8 +4,9 @@
     <div class="container">
 
         @include('partials.success')
+        @include('partials.errors')
 
-        <div class="row row-cols-2">
+        <div class="row row-cols-2 mt-5">
             <div class="col">
                 <form action="{{ route('admin.types.store') }}" method="post">
                     @csrf
@@ -34,7 +35,21 @@
                             @forelse ($types as $type)
                                 <tr class="">
                                     <td scope="row">{{ $type->id }}</td>
-                                    <td>{{ $type->name }}</td>
+                                    <td>
+                                        <form action="{{ route('admin.types.update', $type) }}" method="post">
+                                            @csrf
+                                            @method('PATCH')
+
+                                            <div class="mb-3">
+                                                {{-- <label for="title" class="form-label"><strong>Title</strong></label> --}}
+                                                <input type="text" class="form-control" name="name" id="name"
+                                                    aria-describedby="helptitle" placeholder="Update type name"
+                                                    value="{{ old('name') ?: $type->name }}" />
+                                                {{-- <small id="helptitle" class="form-text text-muted">Update project title</small> --}}
+                                            </div>
+                                            <button class="btn btn-info" type="submit">up date</button>
+                                        </form>
+                                    </td>
                                     <td>
                                         <a href="{{ route('admin.types.show', $type) }}">{{ count($type->projects) }}</a>
                                     <td>

@@ -62,7 +62,13 @@ class TypeController extends Controller
      */
     public function update(UpdateTypeRequest $request, Type $type)
     {
-        //
+        $val_data = $request->validated();
+
+        $val_data['slug_type'] = Str::of($request->name)->slug('-');
+
+        $type->update($val_data);
+
+        return to_route('admin.types.index')->with('message', 'Type updated miracolously😄');
     }
 
     /**
