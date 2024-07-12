@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProjectController;
 use App\Http\Controllers\Admin\TypeController;
+use App\Http\Controllers\LeadController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,7 +30,14 @@ Route::middleware(['auth', 'verified'])
 
         Route::resource('projects', ProjectController::class);
         Route::resource('types', TypeController::class);
+
+        Route::get('/mailable', function () {
+            $lead = App\Models\Lead::find(1);
+            return new App\Mail\NewLeadMarkdown($lead);
+        });
     });
+Route::get('/contacts', [LeadController::class, 'create'])->name('contacts');
+Route::post('/contacts', [LeadController::class, 'store'])->name('contacts.store');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
