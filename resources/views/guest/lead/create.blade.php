@@ -3,6 +3,7 @@
 @section('content')
     <div class="container">
         @include('partials.success')
+        @include('partials.errors')
 
         <h1>Get in touch</h1>
 
@@ -10,7 +11,7 @@
             @csrf
             <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelpId"
+                <input type="mail" class="form-control" name="mail" id="mail" aria-describedby="emailHelpId"
                     placeholder="abc@mail.com" />
                 <small id="emailHelpId" class="form-text text-muted">Help text</small>
             </div>
@@ -23,8 +24,8 @@
             </div>
 
             <div class="mb-3">
-                <label for="text-message" class="form-label">Text message</label>
-                <textarea class="form-control" name="text-message" id="text-message" rows="3"></textarea>
+                <label for="message" class="form-label">Text message</label>
+                <textarea class="form-control" name="message" id="message" rows="3"></textarea>
             </div>
 
 

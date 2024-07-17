@@ -36,8 +36,8 @@ Route::middleware(['auth', 'verified'])
             return new App\Mail\NewLeadMarkdown($lead);
         });
     });
-Route::get('/contacts', [LeadController::class, 'create'])->name('contacts');
-Route::post('/contacts', [LeadController::class, 'store'])->name('contacts.store');
+Route::get('contacts', [LeadController::class, 'create'])->name('contacts');
+Route::post('contacts', [LeadController::class, 'store'])->name('contacts.store');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

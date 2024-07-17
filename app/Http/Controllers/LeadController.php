@@ -16,7 +16,7 @@ class LeadController extends Controller
 
     public function store(Request $request)
     {
-
+        //dd($request);
         //validate
         $val_data = $request->validate([
             'name' => 'required',
@@ -24,11 +24,13 @@ class LeadController extends Controller
             'message' => 'required|max:1000'
         ]);
 
+
         //create
         $newLead = Lead::create($val_data);
+        //dd($newLead);
 
         //send mail
-        Mail::to('admin@cristina.com')->send(new NewLeadMarkdown($newLead));
+        Mail::to('info@boolpress.com')->send(new NewLeadMarkdown($newLead));
 
         //redirect
         return back()->with('message', 'Message sent successfully');
